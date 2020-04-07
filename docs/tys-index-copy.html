@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/w3.css">
+  </head>
+
+  <style>
+    body {
+      text-align: center;
+      font-family: Helvetica, San-Serif;
+      background-color: #444;
+      background-image: url("images/greenwindows_small.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    #bigwrapper {
+      max-width:1000px;
+      display:inline-block;
+      margin-top:20px;
+      margin-bottom:20px;
+      text-align:center;
+      background-color:#f0f0f0;
+    }
+    #loading {
+      color:#ccc;
+    }
+    #form {
+      display: none;
+      margin:5px;
+      /*padding-bottom:10px;*/
+    }
+    #result {
+      margin-top:-10px;
+      display: none;
+    }
+    #userlist {
+      /*background-color:#f7f7f7;*/
+      /*border:solid;*/
+      /*border-width: 1px;*/
+      padding:10px;
+      margin:10px;
+      border-color:#ccc;
+      max-width:980px;
+      display:inline-block;
+      text-align:left;
+    }
+    #howmany {
+      width:50px;
+    }
+    #maincopy {
+      max-width:600px;
+      margin: 0 auto;
+      margin-top: 20px;
+      padding-left:10px;
+      padding-right:10px;
+      /*font-size:smaller;*/
+      color:#666;
+    }
+    #establishmentList {
+      width:300px;
+      margin-bottom:15px;
+    }
+    #randomizeControls {
+      display:block;
+    }
+    .userrecord {
+      margin:10px;
+      padding:5px;
+      -webkit-backface-visibility: hidden;
+      background-color:#fafafa;
+      /*transition: 1.5s;*/
+    }
+/*    .userrecord:nth-of-type(6n+0) {
+      transform: rotate(1.5deg);
+    }
+    .userrecord:nth-of-type(6n+1) {
+      transform: rotate(-1deg);
+    }
+    .userrecord:nth-of-type(6n+2) {
+      transform: rotate(-1.5deg);
+    }
+    .userrecord:nth-of-type(6n+3) {
+      transform: rotate(0.5deg);
+    }
+    .userrecord:nth-of-type(5n+4) {
+      transform: rotate(-0.25deg);
+    }
+    .userrecord:nth-of-type(5n+5) {
+      transform: rotate(0.5deg);
+    }*/
+    .userrecord:hover {
+      /*transform: rotate(0deg);*/
+      background-color:#fff;
+      /*transition: 0.5s;*/
+    }
+    .idblock {
+      display: inline-block;
+      width:300px;
+      max-width:400px;
+      float:left;
+    }
+    .linklist {
+      display: inline-block;
+      vertical-align: text-top;
+      max-width:580px;
+      padding-top:10px;
+      text-align:center;
+    }
+    .linkblock {
+      display: inline-block;
+      vertical-align: text-top;
+      width:200px;
+      max-width:580px;
+      padding-top:10px;
+      float:left;
+      text-align:center;
+    }
+    .clearblock {
+      clear: both;
+      height:1px;
+      width:1px;
+    }
+    .name {
+      font-size:larger;
+      font-weight:bold;
+    }
+    .establishment {
+      font-size:smaller;
+      margin-left:10px;
+    }
+    .closed {
+      font-size:smaller;
+      margin-left:10px;
+    }
+    .label {
+      color: #888;
+    }
+    .citycard {
+      padding-bottom:0px;
+    }
+    .cityThumb {
+      display:inline-block;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width:120px;
+      height:120px;
+      margin-top:5px;
+      margin-bottom:10px;
+      margin-left:15px;
+    }
+    #sectionHeader {
+      margin-top:20px;
+    }
+    .otherSiteThumb {
+      display:inline-block;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width:120px;
+      height:120px;
+      margin-top:5px;
+      margin-bottom:10px;
+      margin-right:15px;
+    }
+    .otherSiteContent {
+      display:inline-block;
+    }
+    .tipButton {
+      margin-bottom:5px;
+    }
+    .comingSoon {
+      background-color: #888 !important;
+      pointer-events: none !important;
+      cursor: default !important;
+    }
+  </style>
+
+  <body class="">
+    <div id="bigwrapper" class="w3-card-2 w3-round-large">
+
+      <header class="w3-container w3-blue w3-round-large">
+        <h1>Tip Your Server</h1>
+        <!-- <div id="relatedsites" class="linklist">
+          <a href="https://docs.google.com/document/d/e/2PACX-1vRfSxHaPuUEnRqQmunDI5UsVAoPk6FC6-NCvMlyWWsarfdB6_wDn15RgaNnyMNNMKUvZOc2PV5nUJjH/pub?fbclid=IwAR0MUIb-_g1mGW-Sb-8lfbLGHX-tlr2baU-ZpsUqebYQ4t2f7-WbKMnTBQ">Madison Tip Jar Sign Up</a>
+          |
+          <a href="http://centerforethicsandpolicy.com/PGHTipJar.html">Pittsburgh Tip Jar Sign Up</a>
+        </div>
+        <br> -->
+        <div id="contact" class="linklist">
+          Submit your existing Virtual Tip Jar to be listed here by filling out <a href="https://docs.google.com/forms/d/e/1FAIpQLSeJOYNzzNevqndOu-nJU3Ny2QtHGwtgw5A8JUBdlWMJRmJqmA/viewform?usp=sf_link">this form</a>. Work is in progress to get additional tip jars listed and running on the Tip Your Server code.
+        </div>
+        <br><br>
+      </header>
+
+      <!-- CITY LIST STARTS HERE -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+            '../images/greenwindows_small.jpg'
+          );"></div>
+        <h3>
+          Madison, Wisconsin
+        </h3>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="/MSN"
+        >
+          Give Someone a Tip
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/document/d/e/2PACX-1vRfSxHaPuUEnRqQmunDI5UsVAoPk6FC6-NCvMlyWWsarfdB6_wDn15RgaNnyMNNMKUvZOc2PV5nUJjH/pub?fbclid=IwAR0MUIb-_g1mGW-Sb-8lfbLGHX-tlr2baU-ZpsUqebYQ4t2f7-WbKMnTBQ"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- ====================== -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+          '../images/PGH11_small.jpg'
+        );"></div>
+        <h3>
+          Pittsburgh, Pennsylvania
+        </h3>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="/PGH"
+        >
+            Give Someone a Tip
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSe55XkbBMgOHwqHqfFNFJLiuORCtwDHaM1jPhYPiYqNkyFtxg/viewform"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- ====================== -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+          '../images/Hillsboro_small.jpg'
+        );"></div>
+        <h3>
+          Hillsboro, Oregon
+        </h3>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://hillsborochamberor.com/hillsborotipjar/"
+        >
+            Give Someone a Tip
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSczBtFge_UBqvKvv17DQfOvEcOaGyQYkVyl-cuCEpkl8Ta5Hw/viewform"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- ====================== -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+          '../images/fonddulac.jpg'
+        );"></div>
+        <h3>
+          Fond du Lac Area, Wisconsin
+        </h3>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/spreadsheets/d/1LP7CwplL8scRO3YX6veg_rrF2CFDgZpCozrkyqR7Ahk/edit#gid=29962068"
+        >
+            Give Someone a Tip
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfSfM3n4qaU6mdvhWt-dA9cph20Tm4GXzPcsHGHjPjeUoJWwQ/viewform"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- ====================== -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+          '../images/centraloh.jpg'
+        );"></div>
+        <h3>
+          Central Ohio
+        </h3>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/spreadsheets/d/138fCOEAksvb1Xvti4KeWfxLD6vx-HdI8juFv4NMe-YY/edit#gid=1423019838"
+        >
+            Give Someone a Tip
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSf2jipi7ICcjUQk_JogZcB0dapuku2oVEULcw9jceZj-6EGfQ/viewform"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- ====================== -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+          '../images/statesville.jpg'
+        );"></div>
+        <h3>
+          Statesville, NC
+        </h3>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/spreadsheets/d/14sC-Cyhq0iIk8usLZcFQaBn_brj2bV-KV5mxhWKxKhA/htmlview"
+        >
+            Give Someone a Tip
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSd0601QlDA2a2nbK_cVyZy9ZDLVXFd36rMeGmgIAd6tHRg42w/viewform"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- ====================== -->
+      <!--
+        Below this are entries that don't yet have active tip links.
+        they have the "comingSoon" class, and the button text has been changed from
+        "Give Somone a Tip" to "Coming Soon".
+        To make them active, remove the class, change the button text, and move them into
+        the block of entries above.
+      --->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+          '../images/JessieLane.jpg'
+        );"></div>
+        <h3>
+          Lodi, Wisconsin
+        </h3>
+        <a class="tipButton comingSoon w3-button w3-blue w3-round-large"
+          href=""
+        >
+            Coming Soon
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://www.google.com/url?q=https://docs.google.com/forms/d/1g4QeSGac2yR-ZCrnIXsRrQZ3shGZuXoBvuOimNstx7U/edit&sa=D&ust=1585174303746000"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- ====================== -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+          '../images/monroeGreetings_small.jpg'
+        );"></div>
+        <h3>
+          Monroe, Wisconsin
+        </h3>
+        <a class="tipButton comingSoon w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/spreadsheets/d/1LPzd3Ziwg9oYKjUeTDxn5QaAB3Y9Y_Oj4Vi5sBWol2c/edit#gid=1196024776"
+        >
+            Coming Soon
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdwVDwvVq2E-A518DJcwxZ7cy1-OPARKSEb60n1LWSRX3FCzg/viewform"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- ====================== -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+          '../images/batonrouge.jpg'
+        );"></div>
+        <h3>
+          Baton Rouge, Louisiana
+        </h3>
+        <a class="tipButton comingSoon w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/spreadsheets/d/1Ursqr5m99AoPj4VEdiJyccrCFnqlmgwKQtmg7OvYqPo/edit#gid=722877938"
+        >
+            Coming Soon
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSf67A8Qu73lAatL0QXAsvoHNmABSbH_WYn6Sl8TqjKJm5pbww/viewform"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- ====================== -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round">
+        <div class="cityThumb w3-left w3-circle w3-card-2" style="background-image:url(
+          '../images/lacrosse.jpg'
+        );"></div>
+        <h3>
+          LaCrosse Area, Wisconsin
+        </h3>
+        <a class="tipButton comingSoon w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/spreadsheets/d/17lEdIwcdhyW7LqyrNiBDEwMvfb6VdWCnt7JM1MS0mK0/edit#gid=1900769049"
+        >
+            Coming Soon
+        </a>
+        <a class="tipButton w3-button w3-blue w3-round-large"
+          href="https://docs.google.com/forms/d/1xBRzCQyDNOk_VHILUTmYeNCNPHK3inqbmR6VX-bsbYk/viewform?edit_requested=true"
+        >
+            Sign Up To Receive Tips
+        </a>
+      </div>
+
+      <!-- CITY LIST ENDS HERE -->
+
+      <h3 id="sectionHeader">Similar Efforts Elsewhere</h3>
+
+      <!-- OTHER SITE LIST STARTS HERE -->
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round w3-center">
+        <div class="otherSiteThumb w3-right w3-circle w3-card-2" style="background-image:url(
+          '../images/tiptheindustry.jpg'
+        );"></div>
+        <div class="otherSiteContent">
+          <a href="http://serviceindustry.tips" target="_blank"><h2>
+            Service Industry Tips
+          </h2></a>
+          <p>Don't forget to tip your bartender.<p>
+        </div>
+      </div>
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round w3-center">
+        <div class="otherSiteThumb w3-right w3-circle w3-card-2" style="background-image:url(
+          '../images/virtualtipjar.jpg'
+        );"></div>
+        <div class="otherSiteContent">
+          <a href="https://www.virtualtipjars.org/" target="_blank"><h2>
+            Virtual Tip Jars
+          </h2></a>
+          <p>International and US Tip Jar Listings.<p>
+        </div>
+      </div>
+
+      <div class="w3-container w3-card-4 userrecord citycard w3-round w3-center">
+        <div class="otherSiteThumb w3-right w3-circle w3-card-2" style="background-image:url(
+          '../images/covid19tipjars.jpg'
+        );"></div>
+        <div class="otherSiteContent">
+          <a href="https://unstoppablesoftware.com/master-tipjar-list/" target="_blank"><h2>
+            COVID19 Tip Jars
+          </h2></a>
+          <p>Tip Jar Listings across the US.<p>
+        </div>
+      </div>
+
+      <!-- OTHER SITE LIST ENDS HERE -->
+
+      <p id="maincopy">
+        Virtual Tip Jars are open-source, community-driven resources to help unemployed and under-employed service industry workers continue to receive tips from their regular customers, irregular customers, and others within their local community or from afar. Service industry workers in need of tips can provide their name, place of work, and Venmo or Paypal information, and that information can be provided to others looking to tip you.
+        <br><br>
+        The Tip Your Server (TYS) project supports Virtual Tip Jars by making tipping easier, offering randomly selected people, establishment lists, and adding Venmo and PayPal buttons.
+        <br><br>
+        Copy this <a href="https://docs.google.com/document/d/1SkyuI5BkGqnTgnXRNy8Kp9nJrrL67synMFKDkbhZkMs/copy">Virtual Tip Jar Template</a> google document to create a tip jar.
+        <br><br>
+        Check out <a href="https://docs.google.com/document/d/1G5e3f92J1OdXH7HNmHSQJuOQNCiAgePmO0QH2ekHnJU/edit?usp=sharing">our FAQ</a> to learn more.
+        <br><br>
+        This is a volunteer effort in Madison and Pittsburgh, inspired by the <a href="http://centerforethicsandpolicy.com/PGHTipJar.html">Pittsburgh Virtual Tip Jar</a>
+        <br><br>
+        Inquiries: <a href="mailto:tipyourserver@therabble.co">tipyourserver@therabble.co</a>
+        <br><br>
+      </p>
+
+    </div>
+
+  <!-- <script async defer src="https://cdn.simpleanalytics.io/hello.js"></script> -->
+  <script async defer src="https://ping.tipyourserver.org/hello.js"></script>
+  <!-- <noscript><img src="https://api.simpleanalytics.io/hello.gif" alt=""></noscript> -->
+  <!-- We affirmatively decided we don't want to track who have turned javascript off,
+        as they probably didn't want to be tracked anyway. -->
+  </body>
+
+<!-- <script>
+    // let dataSource = "https://madison-tips.now.sh/api/people";
+    let dataSource = "https://api.tipyourserver.org/api/people";
+
+    let dataList = [];
+    let establishmentHash = {};
+    let establishmentList = [];
+    let loadingElement = document.getElementById("loading");
+    let formElement = document.getElementById("form");
+    let resultElement = document.getElementById("result");
+    let outOfElement = document.getElementById("outof");
+    let howManyElement = document.getElementById("howmany");
+    let establishmentPulldownElement = document.getElementById("establishmentList");
+
+    _getDataFrom(dataSource).then(data => {
+      dataList = data.people;
+      console.log("which is",dataList.length,"records long.");
+      loadingElement.style.display = "none";
+      formElement.style.display = "inline-block";
+      outOfElement.innerHTML = "(out of " + dataList.length + ") ";
+      for(var i=0;i<dataList.length;i++) {
+        let key = _standardizeKey(dataList[i].establishment);
+        let title = _titleCase(dataList[i].establishment);
+        if (!establishmentHash[key]) {
+          establishmentHash[key] = [];
+          establishmentList.push(title);  //we'll use the first title we find, right or wrong.
+        }
+        establishmentHash[key].push(dataList[i]);
+      }
+      establishmentList.sort();
+      console.log("establishments:",establishmentList);
+      let establishPulldownHTML = '<option value="" selected>Any Madison Establishment</option>';
+      for(var i=0;i<establishmentList.length;i++) {
+        establishPulldownHTML += '<option value="';
+        establishPulldownHTML += _standardizeKey(establishmentList[i]);
+        establishPulldownHTML += '">';
+        establishPulldownHTML += establishmentList[i];
+        establishPulldownHTML += '</option>';
+      }
+      establishmentPulldownElement.innerHTML = establishPulldownHTML;
+    }).catch(error => {
+      console.error(error);
+    });
+
+    async function _getDataFrom(url) {
+      try {
+        const response = await fetch(url, {
+
+          method: 'GET', // *GET, POST, PUT, DELETE, etc.
+          //mode: 'no-cors',
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          headers: {
+              'Accept': 'application/json',
+             // 'cache-control': 'max-age=0',
+              },
+          });
+       // const response = await fetch(url, {mode: 'no-cors'});
+        // if(!response.ok) // check if response worked (no 404 errors etc...)
+        //  throw new Error(response.statusText);
+
+        const data = await response.json(); // get JSON from the response
+        return data; // returns a promise, which resolves to this data value
+      } catch(error) {
+        console.log("throwing error: " + error);
+        return error;
+      }
+    }
+
+    function _standardizeKey(string) {
+      if(!string) string="unknown";
+      let stringClear = string.toLowerCase().replace(/[^a-z]/g,"");
+      //console.log("key:",stringClear);
+      return stringClear;
+    }
+
+    function _titleCase(string) {
+      let stringClear = string.trim();
+      if(!stringClear) stringClear="Unknown";
+      // var sentence = stringClear.toLowerCase().split(" ");
+      // for(var i = 0; i< sentence.length; i++){
+      //    sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+      // }
+      // return sentence.join(" ");
+      return stringClear;
+   }
+
+   function updateCount() {
+    let filter = establishmentPulldownElement.value
+    console.log("list changed to",filter);
+    let count=0;
+    if(!filter) {
+      count = dataList.length;
+      outOfElement.innerHTML = "(out of " + count + ") ";
+      randomizeControls.style.display="block";
+      resultElement.style.display = "none";
+    } else {
+      //count = establishmentHash[filter].length;
+      randomizeControls.style.display="none";
+      randomSearch();
+    }
+   }
+
+    function randomSearch() {
+      let htmlBuild = "<div id='userlist'>";
+      let whichToRemove = null;
+      let howMany = Number(howManyElement.value);
+      let filter = establishmentPulldownElement.value;
+
+      console.log(howMany,"from",filter);
+
+      let workList = [];
+      if (!filter) {
+        workList = dataList;
+      } else {
+        workList = [...establishmentHash[filter]];
+        howMany = workList.length;
+      }
+
+      for(i=0;i<(Math.floor(Math.random()*5));i++) {
+        htmlBuild += "<div class='userrecord w3-card-2' style='display:none;'></div>";
+        //adds some random invisible divs so the first card shows at a different angle each time
+      }
+
+      if (howMany > workList.length) howMany = workList.length;
+
+      for(i=0;i<howMany;i++) {
+        whichToRemove = Math.floor(workList.length * Math.random());
+        var aRecord = workList[whichToRemove];
+        console.log(aRecord);
+        workList.splice(whichToRemove,1);
+        outOfElement.innerHTML = "(out of " + workList.length + ") ";
+        htmlBuild += "<div class='userrecord w3-card-4 w3-round'>";
+        htmlBuild += "<div class='idblock'>";
+        htmlBuild += "<span class='name'>" + aRecord.name + "</span>";
+        htmlBuild += "<br><span class='establishment'>" + aRecord.establishment + "</span>";
+        htmlBuild += "<br><span class='closed'><span class='label'>Closed?</span> " + aRecord.haveClosed + "</span>";
+        htmlBuild += "</div><div class='linkblock'>"
+
+        // if(aRecord.venmoUser) {
+        //   htmlBuild += "<span class='venmo'><span class='label'>Venmo User:</span> " + aRecord.venmoUser + "</span><br>";
+        // }
+        // if(aRecord.paypalUser) {
+        //   htmlBuild += "<span class='paypal1'><span class='label'>Paypal User:</span> " + aRecord.paypalUser + "</span><br>";
+        // }
+        if(aRecord.venmoURL) {
+          htmlBuild += '<a class="w3-button w3-blue w3-round-large" href="';
+          htmlBuild += aRecord.venmoURL;
+          htmlBuild += '" target="_blank">';
+          htmlBuild += 'Venmo';
+          htmlBuild += "</a> ";
+        }
+        if(aRecord.paypalURL) {
+          // htmlBuild += "<span class='paypal2'><span class='label'>Paypal Link:</span> " + aRecord.paypalURL + "</span><br>";
+          htmlBuild += '<a class="w3-button w3-indigo w3-round-large" href="';
+          htmlBuild += aRecord.paypalURL;
+          htmlBuild += '" target="_blank">';
+          htmlBuild += 'PayPal';
+          htmlBuild += "</a>";
+        }
+        htmlBuild += "</div><div class='clearblock'></div><br></div>";
+      }
+      htmlBuild += "</div>";
+      resultElement.innerHTML = htmlBuild;
+      resultElement.style.display = "block";
+    }
+  </script>  -->
+</html>
+
