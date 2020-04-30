@@ -1,0 +1,26 @@
+{
+  "name": "sustain-care.org",
+  "version": "0.0.1",
+  "description": "A project intended to help preserve demand in the restaurant, distribution, and small farm economy while feeding care workers high quality prepared meals prepared by well paid workers in safe sustainable working conditions.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/therabble/sustain-care.org.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/therabble/sustain-care.org/issues"
+  },
+  "homepage": "https://github.com/therabble/sustain-care.org#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.10.0"
+  }
+}
