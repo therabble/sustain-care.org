@@ -5,4 +5,4 @@ for the various care initiatives.
 
 The files in here will be available to the templates at build time.
 
-Don't checkin your "secrets.js" file int Github. The example is just here to show you how to add yours. .gitignore is set to ignore this file, FYI.
+Don't checkin your "secrets.js" file int Github. The example is just here to show you how to add yours. We ran `git update-index --assume-unchanged data/secrets.js` here to avoid it. You may have to do the same.
