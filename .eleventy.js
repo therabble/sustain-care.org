@@ -13,6 +13,7 @@ module.exports = function(eleventyConfig) {
       output: "docs",
       includes: "_layouts",
       layouts: "_layouts",
+      data: "../data"
     },
   };
 };
