@@ -8,3 +8,5 @@ e-mailed 4/23/20 - no reply
 Lisa Loup LLoup@foodfightinc.com
 
 e-mailed 4/13 and 4/16/20 - no reply
+
+talked to XYZ
