@@ -1,11 +1,13 @@
 ---
-title: title
+title: {{{this.renderData.title}}}
+renderData:
+  title: {{{page.title}}}
 ---
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>{{title}} - Sustain Care</title>
+  <title>{{ renderData.title or title or metadata.title }} - Sustain Care</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
