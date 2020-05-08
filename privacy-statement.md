@@ -7,11 +7,9 @@ FoodWorks Madison is aware of online privacy issues and concerns. We make our pr
 
 FoodWorks Madison has the capability of collecting various bits of information from you without your active participation (as you browse our site). Such information might include: IP address, browser type/version and computer platform. Your browser automatically submits this information in order to correctly fulfill page requests. 
 
-Like many websites, the FoodWorks Madison reserves the right to use "cookie" technology, including for Google Analytics. The cookies we use do not reveal any personally identifiable information about you. Cookies help us understand which parts of our website are the most popular, where our visitors are going, and how long they spend there. We use cookies to study traffic patterns on our site so we can make adjustments and improvements.
+Like many websites, the FoodWorks Madison reserves the right to use "cookie" technology, including for analytics. The cookies we use do not reveal any personally identifiable information about you. Cookies help us understand which parts of our website are the most popular, where our visitors are going, and how long they spend there. We use cookies to study traffic patterns on our site so we can make adjustments and improvements.
 
 FoodWorks Madison will not make any attempt to disaggregate the data provided by cookies and will not identify users or facilitate the merging of personally identifiable information with non-personally identifiable information. 
-
-To provide website visitors the ability to prevent their data from being used by Google Analytics, Google has developed the Google Analytics opt-out brower add-on. [More information can be found here](http://tools.google.com/dlpage/gaoptout/).
 
 
 ## Why we collect your personal information
