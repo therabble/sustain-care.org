@@ -1,4 +1,7 @@
-
+---
+layout: _basic_text.html
+title: Contact Us
+---
 # Privacy Statement
 
 FoodWorks Madison is aware of online privacy issues and concerns. We make our privacy policy available so visitors to our site may feel free to provide personal information, knowing this information is not intended for misuse.
