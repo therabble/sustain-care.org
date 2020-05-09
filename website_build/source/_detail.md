@@ -1,25 +1,22 @@
 ---
 layout: _initiative_detail.html
 pagination:
-    data: projects
+    data: projects.records
     size: 1
     alias: project
 permalink: "/{{project.name | slug}}/"
-
-date: Last Modified
-# this doesn't work!
-#title: {{project.name}}
+renderData:
+    title: "{{project.name}}"
 ---
 
-
-# {{ project.name }}
+# {{ renderData.title }}
 
 [LOGO] [PHOTO(S)]
 
 {{ project.description }}
 
-##### Tags: 
-{% for t in project.tags %}<span class="tag is-info">{{ t }}</span> {% endfor %}
+##### Tags:
+{% for t in project.tags %}[<span class="tag is-info">{{ t }}</span>](/list/{{t}}/) {% endfor %}
 
 ##### Details:
 
