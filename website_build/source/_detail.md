@@ -9,7 +9,7 @@ renderData:
     title: "{{project.name}}"
 ---
 
-# {{ project.name }}
+# {{ renderData.title }}
 
 [LOGO] [PHOTO(S)]
 

@@ -16,9 +16,6 @@ renderData:
 <hr>
 {% endfor %}
 
-{% if tag %}
-[See all Initiatives...](/list/)
-{% endif %}
 
 #### Filter by tag:
 
