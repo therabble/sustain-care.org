@@ -1,0 +1,38 @@
+---
+layout: _page_template.html
+renderData:
+    title: Add A New Initiative
+background: hot.2
+---
+
+<header class="section hero bgt" style="background-image: url('/img/bg/twnkl.{{background}}.png');">
+<div class="hero-body">
+    <div class="container">
+        <h1 class="title is-1">{{ renderData.title }}</h1>
+    </div>
+</div>
+</header>
+
+<main>
+<section class="content section">
+<div class="columns">
+    <div class="column">
+        <h1 class="title">Send Us Your Info</h1>
+        <p>We're using a basic Google Form to collect data that we'll publish here. The form will ask you a number of basic questions about your project. We'll use that information to
+        publish a page for you here on this site.</p>
+        <p><a href="{{ projects.public_form_url }}" target="_blank" title="Go fill in the form..." class="button is-success">Go To the Form</a></p>
+    </div>
+    <aside class="column">
+        <h3 class="subtitle">Information You'll Need:</h3>
+        <p>You can always change it later, but for starters, gather these bits:</p>
+        <ul>
+            <li>Your Project's name, description and web link (if you have one)</li>
+            <li>Basic info about you (or your chosen representative), and how you want to be contacted</li>
+            <li>How people can donate funds (a link)</li>
+            <li>Images like a logo or photo if you have them</li>
+            <li>Information about organizations or institutions that back your initiative (if you have some)</li>
+        </ul>
+    </aside>
+</div>
+</section>
+</main>

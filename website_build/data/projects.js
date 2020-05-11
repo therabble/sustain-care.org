@@ -170,5 +170,7 @@ module.exports = async function() {
     records: record_objects,
     tags: all_known_tags,
     records_by_tag: tagged_records,
+    now: Date(), // just a hack to get the time this data was built into templates
+    public_form_url: 'https://forms.gle/Qc7MZvDKt2s2nJgq7',
   };
 };
