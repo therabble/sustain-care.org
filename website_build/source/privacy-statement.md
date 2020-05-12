@@ -1,6 +1,7 @@
 ---
 layout: _basic_text.html
-title: Contact Us
+renderData:
+    title: Contact Us
 ---
 # Privacy Statement
 

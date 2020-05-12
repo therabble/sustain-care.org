@@ -91,6 +91,18 @@ function gather_tags(tag_string) {
   }
 }
 
+function example_to_first(records) {
+  // just want this record to be first
+  const index = records.findIndex(
+    r => r.name === 'Example Community Meals Project'
+  );
+  if (index) {
+    const r = records.splice(index, 1);
+    records.splice(0, 0, r[0]);
+  }
+  return records;
+}
+
 // TO-DO stuff:
 // ? 1. What about when there are newlines, for example in the description?
 // ? 2. How to handle the image files and other URLs to content?
@@ -157,7 +169,7 @@ module.exports = async function() {
   }
 
   // ok, to business...
-  const record_objects = raw_rows
+  let record_objects = raw_rows
     .slice(1) // remove our labels in there
     .map(row => to_record_object(row, COLUMN_ORDER));
   //   console.log(records);
@@ -165,6 +177,9 @@ module.exports = async function() {
   console.log(`Found (${record_objects.length}) records from CSV url.`);
   all_known_tags.sort();
   console.log(`Found tags: (${all_known_tags})`);
+
+  // sort them so the example project is first, if it's there...
+  record_objects = example_to_first(record_objects);
 
   return {
     records: record_objects,

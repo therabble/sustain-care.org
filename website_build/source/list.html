@@ -1,0 +1,43 @@
+---
+layout: _page_template.html
+renderData:
+    title: All Care Initiatives
+background: soft.4
+---
+
+<header class="section hero bgt" style="background-image: url('/img/bg/twnkl.{{background}}.png');">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-half">
+                    <h1 class="title is-1">{{ renderData.title }}</h1>
+                </div>
+                <div class="column">
+                    <aside class="message is-warning">
+                        <div class="message-header">
+                            <p>Pardon the dust!</p>
+                        </div>
+                        <div class="message-body">
+                            The layout/design here is a little rough, images are missing, but the information is all here.
+                            If we're missing something, <a href="/contact/" title="Contact Us...">let us know</a>! Meanwhile,
+                            we're working on it.
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="section container content">
+        <div class="columns">
+            <section class="column is-9">
+                {% include _list_records, records: projects.records %}
+            </section>
+            <aside class="column is-2 is-offset-1">
+                {% include _sidebar_tags %}
+            </aside>
+        </div>
+    </section>
+</main>

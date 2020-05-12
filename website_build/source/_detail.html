@@ -1,0 +1,91 @@
+---
+layout: _page_template.html
+pagination:
+    data: projects.records
+    size: 1
+    alias: project
+permalink: "/{{project.name | slug}}/"
+renderData:
+    title: "{{project.name}}"
+---
+
+
+<main class="section">
+    <div class="container columns">
+        <aside class="column is-half">
+            <figure class="image is-4by3">
+                <img src="https://via.placeholder.com/500x350?text=Logo%20Image" alt="Logo">
+            </figure>
+            <p class="is-size-6"><strong>Tags:</strong>
+                {% for t in project.tags %}{{ t }}, {% endfor %}
+            </p>
+        </aside>
+
+        <div class="column is-half">
+            <div>
+                <article class="content">
+                    <h1 class="title is-2">{{ project.name }}</h1>
+                    <article class="is-size-4">{{ project.description }}</article>
+                </article>
+                <hr>
+
+                <div class="columns">
+                    <div class="column content">
+                        <strong><a href="{{ project.fundraising_url }}" class="button is-rounded is-success is-large">Donate Now</a></strong>
+                    </div>
+                    <div class="column content is-large">
+                        <a href="{{ project.main_url }}" title="Navigate to the project's main webpage...">Project Website</a>
+                    </div>
+                    <div class="column is-narrow columns">
+                        {% for link in project.social_urls %}
+                        <div class="column">{% social_link_icon link %}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="columns">
+                    <div class="column is-7 is-offset-5 ">
+                    <aside class="media">
+                        <figure class="media-left image is-96x96">
+                            <img src="https://via.placeholder.com/500x350?text=Logo%20Image" alt="Logo">
+                        </figure>
+
+                        <div class="media-content">
+                            <div class="content">
+                                <h5>Contact Person:</h5>
+                                <p class="title">{{ project.representative_name }}
+                                <p class="subtitle">at <a href="mailto:{{ project.fundraising_email }}" title="Email the fundraisers...">{{ project.fundraising_email }}</a></p>
+                            </div>
+                        </div>
+                    </aside>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container columns">
+        <div class="column">
+
+        </div>
+        <div class="column">
+            {% if project.institutions.length > 0 %}
+            <aside id="institutions">
+                <h3 class="title">Powered By:</h3>
+                <div class="columns">
+                    {% for institution in project.institutions %}
+                    <div class="column is-one-half">
+                        {% include _institution_card, i:institution %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </aside>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+</main>
