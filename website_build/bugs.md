@@ -1,6 +1,12 @@
 # BUGS!
 
+## people stuff, data model
+1. Situation like Morris; they didn't grok the notion of associated instittuions
+1. tags don't seem to be working conceptually
+
 ## data / wiring
+1. People can put non-urls into social links; breaks at layout
+1. Newlines in description text need a solution
 
 ## markup / templates
 1. donate link(s) dont' go anywhere
