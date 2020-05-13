@@ -6,7 +6,7 @@ const assert = require('assert');
 // where we store our "secret" url data source
 const secrets = require('./secrets');
 
-// the order of the columns in the output as of 5/1/2010 @ 5pm.
+// the order of the columns in the output as of 5/13/2010 @ 4pm.
 const COLUMN_ORDER = [
   // by convention, columns tagged with a _ prefix should not be published
   'submit_time',
@@ -56,6 +56,7 @@ const COLUMN_ORDER = [
   'fundraising_url',
   'fundraising_email',
   '_notes',
+  '_publish',
 ];
 
 const all_known_tags = [];
@@ -91,6 +92,18 @@ function gather_tags(tag_string) {
   }
 }
 
+function example_to_first(records) {
+  // just want this record to be first
+  const index = records.findIndex(
+    r => r.name === 'Example Community Meals Project'
+  );
+  if (index) {
+    const r = records.splice(index, 1);
+    records.splice(0, 0, r[0]);
+  }
+  return records;
+}
+
 // TO-DO stuff:
 // ? 1. What about when there are newlines, for example in the description?
 // ? 2. How to handle the image files and other URLs to content?
@@ -98,6 +111,8 @@ function gather_tags(tag_string) {
 
 function to_record_object(row, columns) {
   // given a row, make a nice js object
+  // but only if the _publish column is not empty...
+  if (!row[columns.indexOf('_publish')]) return null;
   const record_obj = {
     submit_time: row[columns.indexOf('submit_time')],
     name: row[columns.indexOf('name')],
@@ -124,15 +139,14 @@ function to_record_object(row, columns) {
     tagged_records[tag].push(record_obj);
   });
 
-  console.log(`logo_url: ${record_obj.logo_url}`);
-  console.log(
-    `representative_avatar_url: ${record_obj.representative_avatar_url}`
-  );
-  record_obj.institutions.forEach(i =>
-    console.log(`institution logo_url: ${i.logo_url}`)
-  );
-  console.log('-------------------------------');
-
+  // console.log(`logo_url: ${record_obj.logo_url}`);
+  // console.log(
+  //   `representative_avatar_url: ${record_obj.representative_avatar_url}`
+  // );
+  // record_obj.institutions.forEach(i =>
+  //   console.log(`institution logo_url: ${i.logo_url}`)
+  // );
+  // console.log('-------------------------------');
   return record_obj;
 }
 
@@ -157,18 +171,24 @@ module.exports = async function() {
   }
 
   // ok, to business...
-  const record_objects = raw_rows
+  let record_objects = raw_rows
     .slice(1) // remove our labels in there
-    .map(row => to_record_object(row, COLUMN_ORDER));
+    .map(row => to_record_object(row, COLUMN_ORDER))
+    .filter(record => record != null); // this filters out empty rows from unpublished flag
   //   console.log(records);
   //   console.log(records[0].institutions[1]);
   console.log(`Found (${record_objects.length}) records from CSV url.`);
   all_known_tags.sort();
   console.log(`Found tags: (${all_known_tags})`);
 
+  // sort them so the example project is first, if it's there...
+  record_objects = example_to_first(record_objects);
+
   return {
     records: record_objects,
     tags: all_known_tags,
     records_by_tag: tagged_records,
+    now: Date(), // just a hack to get the time this data was built into templates
+    public_form_url: 'https://forms.gle/Qc7MZvDKt2s2nJgq7',
   };
 };

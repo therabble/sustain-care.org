@@ -1,0 +1,27 @@
+{% for p in records %}
+
+<div class="columns">
+    <div class="column is-5">
+        <p class="title is-4">
+            <a href="/{{ p.name | slug }}/" title="Name of Project">{{ p.name }}</a>
+        </p>
+        {% if p.institutions.length > 0 %}
+            <p class="subtitle is-size-6">
+            (with
+            {% for i in p.institutions %}
+                {{ i.name }},
+            {% endfor %})
+            </p>
+        {% endif %}
+    </div>
+    <div class="column is-7">
+        <p class="is-size-6">“{{ p.description | truncatewords: 30, '...'}}”</p>
+        <span class="is-size-7">(
+            {% for t in p.tags %}
+            <a class="is-small" href="/list/{{ t }}/">{{ t }}</a>,
+            {% endfor %}
+        )</span>
+    </div>
+</div>
+<hr>
+{% endfor %}

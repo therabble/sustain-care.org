@@ -1,0 +1,8 @@
+
+<h3>Initiatives by Tag:</h3>
+
+<aside>
+{% for tag in projects.tags %}
+    <p><a href="/list/{{tag}}/" class="button is-light is-rounded">{{ tag }}</a></p>
+{% endfor %}
+</aside>
