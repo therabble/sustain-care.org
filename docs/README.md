@@ -4,6 +4,6 @@ These are the statically-generated files for "sustain-care.org". They are made w
 
 Don't edit these files directly, or your changes might get overwritten by the build process. The source files and configuration needed to generate these is at https://github.com/therabble/sustain-care.org.
 
-If you want to add just static things (not code or generated pages) like images or documents or files, stick them in the "website_build/static/" directory, and look into .eleventy.js to add your file to the copy-over function if it's in the root. Then, when the site is rebuilt, they should end up here.
+If you want to add just static things (not code or generated pages) like images or documents or files, stick them in the "source/_static" directory, and when the site is rebuilt, they should end up here.
 
 Contact us at the repo if you need more help.
