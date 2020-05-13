@@ -112,7 +112,7 @@ function example_to_first(records) {
 function to_record_object(row, columns) {
   // given a row, make a nice js object
   // but only if the _publish column is not empty...
-  if (!row[columns.indexOf('_publish')]) return null;
+  if (row[columns.indexOf('_publish')] != 'Y') return null;
   const record_obj = {
     submit_time: row[columns.indexOf('submit_time')],
     name: row[columns.indexOf('name')],
