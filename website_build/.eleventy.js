@@ -8,8 +8,17 @@ function icon (name, size = 32) {
 function social_link_icon(link, clss = "", size = 32) {
   // send in css class string for clss
   const look_for = ["facebook", "instagram", "linkedin", "twitter", "email"];
-  const name = look_for.find(n => link.toLowerCase().includes(n));
-  return `<a href="${link}" target="_blank" class="${clss}" title="navigate to ${name}...">${icon(name, size)}</a>`
+  let name = look_for.find(n => link.toLowerCase().includes(n));
+  // option for an unknown link type...
+  let linked_markup;
+  if (name === undefined) {
+    linked_markup = link;
+    clss += " is-small";
+    name = link;
+  } else
+    linked_markup = icon(name, size);
+
+  return `<a href="${link}" target="_blank" class="${clss}" title="navigate to ${name}...">${linked_markup}</a>`
 };
 
 module.exports = function (eleventyConfig) {
