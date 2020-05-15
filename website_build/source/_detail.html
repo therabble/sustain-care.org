@@ -6,7 +6,9 @@ pagination:
     alias: project
 permalink: "/{{project.name | slug}}/"
 renderData:
-    title: "{{project.name}}"
+    title: "{{ project.name }}"
+    ogtitle: "{{ project.name }}"
+    ogdescription: "{{ project.description | truncatewords: 20 | escape }}"
 ---
 
 
