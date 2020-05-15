@@ -3,8 +3,8 @@ title: {{{this.renderData.title}}}
 ogimage: https://sustain-care.org/img/badge.ogimage.png
 renderData:
   title: {{{page.title}}}
-  ogtitle: "Sustain Care: A Directory of Community-Meal Initiatives"
-  ogdescription: "Sustain Care is a directory of community-meal initiatives responding to COVID-19. We aim to keep our food-business ecology alive by helping them provide quality healthy meals to those in need. Visitors can choose projects, connect and donate directly."
+ogtitle: "Sustain Care: A Directory of Community-Meal Initiatives"
+ogdescription: "Sustain Care is a directory of community-meal initiatives responding to COVID-19. We aim to keep our food-business ecology alive by helping them provide quality healthy meals to those in need. Visitors can choose projects, connect and donate directly."
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +15,8 @@ renderData:
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="{{ ogdescription }}">
 
-  <meta property="og:title" content="{{ renderData.ogtitle }}">
-  <meta property="og:description" content="{{ renderData.ogdescription }}">
+  <meta property="og:title" content="{{ ogtitle }}">
+  <meta property="og:description" content="{{ ogdescription }}">
   <meta property="og:url" content="https://sustain-care.org{{ page.url }}">
   <meta property="og:image" content="{{ ogimage }}">
   <meta property="og:type" content="website">
