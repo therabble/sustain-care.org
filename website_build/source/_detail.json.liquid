@@ -1,0 +1,8 @@
+---
+pagination:
+    data: projects.records
+    size: 1
+    alias: project
+permalink: "/{{project.name | slug}}/data.json"
+---
+{{ project | json }}
