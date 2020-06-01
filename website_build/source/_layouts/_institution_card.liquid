@@ -1,14 +1,18 @@
 <div class="card">
   <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://via.placeholder.com/500x350?text=Logo%20Image" alt="Placeholder image">
+    <figure class="image">
+    {% if i.logo %}
+      <img src="{{i.logo.filename}}" alt="{{i.name}} Institution Logo">
+    {% endif %}
     </figure>
   </div>
   <div class="card-content">
     <div class="media">
       <div class="media-content">
         <p class="title is-4"><a href="{{i.url}}" target="_blank">{{i.name}}</a></p>
+        {% if i.role %}
         <p class="subtitle is-6">{{i.role}}</p>
+        {% endif %}
       </div>
     </div>
   </div>

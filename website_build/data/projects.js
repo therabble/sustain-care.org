@@ -71,11 +71,12 @@ const all_known_tags = [];
 // store references to record objects by tag in here
 const tagged_records = {};
 
-async function makeImageObject(url, filename_prefix) {
+async function makeImageObject(url, filename_prefix, savedir) {
   const id = gd.getIdFromURL(url);
   const obj = await gd.getImageMetadata(id);
   obj.original_url = url;
   obj.filename = `${filename_prefix}.${obj.fileExtension}`;
+  gd.downloadImage(id, obj.filename, savedir);
   return obj;
 }
 
@@ -91,10 +92,10 @@ async function gather_institutions(row, columns) {
         logo: null,
       };
       if (row[columns.indexOf(`institution_${i}_logo_url`)])
-        iobj.logo = await makeImageObject(
-          row[columns.indexOf(`institution_${i}_logo_url`)],
-          `logo.institution${i}`
-        );
+        iobj.logo = {
+          // finishing this outside of this function :-(
+          original_url: row[columns.indexOf(`institution_${i}_logo_url`)],
+        };
       institutions.push(iobj);
     }
   }
@@ -153,11 +154,15 @@ async function make_record_object(row, columns) {
     representative_images: [],
   };
 
+  // bunch of crufty image work...
+
+  const savedir = `../docs/${record_obj.slug}`;
+
   // logo images work
   if (row[columns.indexOf('logo_url')]) {
     const logo_urls = row[columns.indexOf('logo_url')].split(', ');
     for (let i = 0; i < logo_urls.length; i += 1) {
-      const obj = await makeImageObject(logo_urls[i], `logo${i + 1}`);
+      const obj = await makeImageObject(logo_urls[i], `logo${i + 1}`, savedir);
       record_obj.logos.push(obj);
     }
   }
@@ -168,8 +173,23 @@ async function make_record_object(row, columns) {
       ', '
     );
     for (let i = 0; i < rep_urls.length; i += 1) {
-      const obj = await makeImageObject(rep_urls[i], `representative${i + 1}`);
+      const obj = await makeImageObject(
+        rep_urls[i],
+        `representative${i + 1}`,
+        savedir
+      );
       record_obj.representative_images.push(obj);
+    }
+  }
+
+  // institutions images
+  for (let i = 0; i < record_obj.institutions.length; i += 1) {
+    if (record_obj.institutions[i].logo) {
+      record_obj.institutions[i].logo = await makeImageObject(
+        record_obj.institutions[i].logo.original_url,
+        `logo.institution${i + 1}`,
+        savedir
+      );
     }
   }
 

@@ -4,7 +4,7 @@ pagination:
     data: projects.records
     size: 1
     alias: project
-permalink: "/{{project.name | slug}}/"
+permalink: "/{{project.slug}}/"
 renderData:
     title: "{{ project.name }}"
     ogtitle: "{{ project.name }}"
@@ -15,9 +15,11 @@ renderData:
 <main class="section">
     <div class="container columns">
         <aside class="column is-half">
-            <figure class="image is-4by3">
-                <img src="https://via.placeholder.com/500x350?text=Logo%20Image" alt="Logo">
+            {% for img in project.logos %}
+            <figure class="image">
+                <img src="{{ img.filename }}" alt="Logo">
             </figure>
+            {% endfor %}
             <p class="is-size-6"><strong>Tags:</strong>
                 {% for t in project.tags %}{{ t }}, {% endfor %}
             </p>
@@ -36,7 +38,7 @@ renderData:
                         <strong><a href="{{ project.fundraising_url }}" class="button is-rounded is-success is-large">Donate Now</a></strong>
                     </div>
                     <div class="column content is-large">
-                        <a href="{{ project.main_url }}" title="Navigate to the project's main webpage...">Project Website</a>
+                        <a href="{{ project.main_url }}" title="Navigate to the project's main webpage...">Website</a>
                     </div>
                     <div class="column is-narrow columns">
                         {% for link in project.social_urls %}
@@ -45,13 +47,9 @@ renderData:
                     </div>
                 </div>
 
-                <div class="columns">
-                    <div class="column is-7 is-offset-5 ">
+                <div class="content">
+                    <div class="">
                     <aside class="media">
-                        <figure class="media-left image is-96x96">
-                            <img src="https://via.placeholder.com/500x350?text=Logo%20Image" alt="Logo">
-                        </figure>
-
                         <div class="media-content">
                             <div class="content">
                                 <h5>Contact Person:</h5>
@@ -59,6 +57,11 @@ renderData:
                                 <p class="subtitle">at <a href="mailto:{{ project.fundraising_email }}" title="Email the fundraisers...">{{ project.fundraising_email }}</a></p>
                             </div>
                         </div>
+                        {% for img in project.representative_images %}
+                        <figure class="media-left image is-96x96">
+                            <img src="{{ img.filename }}" alt="Project person representative image">
+                        </figure>
+                        {% endfor %}
                     </aside>
                     </div>
                 </div>
