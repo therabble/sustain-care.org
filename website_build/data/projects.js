@@ -2,9 +2,16 @@
 const fetch = require('node-fetch');
 const parse = require('csv-parse/lib/sync');
 const assert = require('assert');
+const slugify = require('slugify'); // pulled in by eleventy
+
+// ripped off from eleventy, so we end up with the same kind of slugs
+function toSlug(str) {
+  return slugify(str, { replacement: '-', lower: true });
+}
 
 // where we store our "secret" url data source
 const secrets = require('./secrets');
+const gd = require('../gdrive');
 
 // the order of the columns in the output as of 5/13/2010 @ 4pm.
 const COLUMN_ORDER = [
@@ -64,17 +71,31 @@ const all_known_tags = [];
 // store references to record objects by tag in here
 const tagged_records = {};
 
-function gather_institutions(row, columns) {
+async function makeImageObject(url, filename_prefix) {
+  const id = gd.getIdFromURL(url);
+  const obj = await gd.getImageMetadata(id);
+  obj.original_url = url;
+  obj.filename = `${filename_prefix}.${obj.fileExtension}`;
+  return obj;
+}
+
+async function gather_institutions(row, columns) {
   const institutions = [];
-  for (let i = 1; i < 6; i += 1) {
+  for (let i = 0; i < 5; i += 1) {
     const inst_name = row[columns.indexOf(`institution_${i}_name`)];
     if (inst_name) {
-      institutions.push({
+      const iobj = {
         name: inst_name,
         role: row[columns.indexOf(`institution_${i}_role`)] || null,
         url: row[columns.indexOf(`institution_${i}_url`)] || null,
-        logo_url: row[columns.indexOf(`institution_${i}_logo_url`)] || null,
-      });
+        logo: null,
+      };
+      if (row[columns.indexOf(`institution_${i}_logo_url`)])
+        iobj.logo = await makeImageObject(
+          row[columns.indexOf(`institution_${i}_logo_url`)],
+          `logo.institution${i}`
+        );
+      institutions.push(iobj);
     }
   }
   return institutions;
@@ -106,32 +127,51 @@ function example_to_first(records) {
 
 // TO-DO stuff:
 // ? 1. What about when there are newlines, for example in the description?
-// ? 2. How to handle the image files and other URLs to content?
-// ? 3. Need a publish/no-publish flag on the data source so things don't get by us that shouldn't
 
-function to_record_object(row, columns) {
+async function make_record_object(row, columns) {
   // given a row, make a nice js object
-  // but only if the _publish column is not empty...
-  if (row[columns.indexOf('_publish')] != 'Y') return null;
   const record_obj = {
     submit_time: row[columns.indexOf('submit_time')],
     name: row[columns.indexOf('name')],
+    slug: toSlug(row[columns.indexOf('name')]),
     description: row[columns.indexOf('description')],
     representative_name: row[columns.indexOf('representative_name')],
 
     // ones that are not required or'd with null if they're empty
     main_url: row[columns.indexOf('main_url')] || null,
-    logo_url: row[columns.indexOf('logo_url')] || null,
-    representative_avatar_url:
-      row[columns.indexOf('representative_avatar_url')] || null,
     fundraising_url: row[columns.indexOf('fundraising_url')] || null,
     fundraising_email: row[columns.indexOf('fundraising_email')] || null,
     social_urls:
       row[columns.indexOf('social_list')].split(',').map(u => u.trim()) || null,
+
     // couple of fancier ones
-    institutions: gather_institutions(row, columns),
+    institutions: await gather_institutions(row, columns),
     tags: gather_tags(row[columns.indexOf('tags_list')]),
+
+    // image placeholders
+    logos: [],
+    representative_images: [],
   };
+
+  // logo images work
+  if (row[columns.indexOf('logo_url')]) {
+    const logo_urls = row[columns.indexOf('logo_url')].split(', ');
+    for (let i = 0; i < logo_urls.length; i += 1) {
+      const obj = await makeImageObject(logo_urls[i], `logo${i + 1}`);
+      record_obj.logos.push(obj);
+    }
+  }
+
+  // representative images work
+  if (row[columns.indexOf('representative_avatar_url')]) {
+    const rep_urls = row[columns.indexOf('representative_avatar_url')].split(
+      ', '
+    );
+    for (let i = 0; i < rep_urls.length; i += 1) {
+      const obj = await makeImageObject(rep_urls[i], `representative${i + 1}`);
+      record_obj.representative_images.push(obj);
+    }
+  }
 
   // stick us in the by-tag lut:
   record_obj.tags.forEach(tag => {
@@ -139,15 +179,21 @@ function to_record_object(row, columns) {
     tagged_records[tag].push(record_obj);
   });
 
-  // console.log(`logo_url: ${record_obj.logo_url}`);
-  // console.log(
-  //   `representative_avatar_url: ${record_obj.representative_avatar_url}`
-  // );
-  // record_obj.institutions.forEach(i =>
-  //   console.log(`institution logo_url: ${i.logo_url}`)
-  // );
-  // console.log('-------------------------------');
   return record_obj;
+}
+
+async function make_records(rows, columns) {
+  let records = [];
+  rows.slice(1);
+  for (const row of rows) {
+    if (row[columns.indexOf('_publish')] === 'Y') {
+      const obj = await make_record_object(row, columns);
+      records.push(obj);
+    }
+  }
+  // sort them so the example project is first, if it's there...
+  records = example_to_first(records);
+  return records;
 }
 
 module.exports = async function() {
@@ -170,23 +216,9 @@ module.exports = async function() {
     throw new Error('Mismatched columns; exit');
   }
 
-  // ok, to business...
-  let record_objects = raw_rows
-    .slice(1) // remove our labels in there
-    .map(row => to_record_object(row, COLUMN_ORDER))
-    .filter(record => record != null); // this filters out empty rows from unpublished flag
-  //   console.log(records);
-  //   console.log(records[0].institutions[1]);
-  console.log(`Found (${record_objects.length}) records from CSV url.`);
-  all_known_tags.sort();
-  console.log(`Found tags: (${all_known_tags})`);
-
-  // sort them so the example project is first, if it's there...
-  record_objects = example_to_first(record_objects);
-
   return {
-    records: record_objects,
-    tags: all_known_tags,
+    records: await make_records(raw_rows, COLUMN_ORDER),
+    tags: all_known_tags.sort(),
     records_by_tag: tagged_records,
     now: Date(), // just a hack to get the time this data was built into templates
     public_form_url: 'https://forms.gle/Qc7MZvDKt2s2nJgq7',

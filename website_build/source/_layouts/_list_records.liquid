@@ -3,7 +3,7 @@
 <div class="columns">
     <div class="column is-5">
         <p class="title is-4">
-            <a href="/{{ p.name | slug }}/" title="Name of Project">{{ p.name }}</a>
+            <a href="/{{ p.slug }}/" title="Name of Project">{{ p.name }}</a>
         </p>
         {% if p.institutions.length > 0 %}
             <p class="subtitle is-size-6">
