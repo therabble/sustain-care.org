@@ -24,7 +24,7 @@
   "dependencies": {
     "@11ty/eleventy": "^0.10.0",
     "csv-parse": "^4.9.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "googleapis": "^39.2.0"
   }
 }
